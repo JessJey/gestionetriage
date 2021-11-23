@@ -7,5 +7,5 @@ import it.prova.gestionetriage.model.Dottore;
 
 
 public interface DottoreRepository extends PagingAndSortingRepository<Dottore, Long>, JpaSpecificationExecutor<Dottore> {
-
+	Dottore findByCodiceDipendente(String codiceInput);
 }
