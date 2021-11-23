@@ -12,12 +12,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 
 import it.prova.gestionetriage.exceptions.UserNotFoundException;
 import it.prova.gestionetriage.model.Stato;
 import it.prova.gestionetriage.model.User;
 import it.prova.gestionetriage.repository.UserRepository;
 
+@Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -53,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
 			if (userExample.getDataCreazione() != null)
 				predicates
-						.add(cb.like(cb.upper(root.get("DATACREAZIONE")), "%" + userExample.getDataCreazione() + "%"));
+						.add(cb.greaterThanOrEqualTo((root.get("DATACREAZIONE")),userExample.getDataCreazione()));
 
 			if (userExample.getStato() != null)
 				predicates.add(cb.like(cb.upper(root.get("STATO")), "%" + userExample.getStato() + "%"));
