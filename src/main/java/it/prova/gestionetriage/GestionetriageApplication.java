@@ -39,7 +39,7 @@ public class GestionetriageApplication {
 	public CommandLineRunner initPazienteDottore(PazienteService pazienteService, DottoreService dottoreService) {
 		return (args) -> {
 			
-	User user = userRepository.findByUsername("admin").orElse(null);
+	User user = userRepository.findByUsername("admin");
 
 	if (user == null) {
 
@@ -71,7 +71,7 @@ public class GestionetriageApplication {
 
 	}
 
-	User commonUser = userRepository.findByUsername("commonUser").orElse(null);
+	User commonUser = userRepository.findByUsername("commonUser");
 
 	if (commonUser == null) {
 

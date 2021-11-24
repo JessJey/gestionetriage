@@ -19,5 +19,7 @@ public interface UserService {
 
 	public User inserisciNuovo(User userInstance);
 	
-	public void changeUserAbilitation(Long userInstanceId);
+	public void changeUserAbilitation(String userInstanceId);
+	
+	User findByUsername(String username);
 }

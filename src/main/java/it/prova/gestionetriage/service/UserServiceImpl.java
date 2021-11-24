@@ -45,21 +45,21 @@ public class UserServiceImpl implements UserService {
 
 			if (!StringUtils.isEmpty(userExample.getUsername()))
 				predicates.add(
-						cb.like(cb.upper(root.get("USERNAME")), "%" + userExample.getUsername().toUpperCase() + "%"));
+						cb.like(cb.upper(root.get("username")), "%" + userExample.getUsername().toUpperCase() + "%"));
 
 			if (!StringUtils.isEmpty(userExample.getNome()))
-				predicates.add(cb.like(cb.upper(root.get("NOME")), "%" + userExample.getNome().toUpperCase() + "%"));
+				predicates.add(cb.like(cb.upper(root.get("nome")), "%" + userExample.getNome().toUpperCase() + "%"));
 
 			if (!StringUtils.isEmpty(userExample.getCognome()))
 				predicates.add(
-						cb.like(cb.upper(root.get("COGNOME")), "%" + userExample.getCognome().toUpperCase() + "%"));
+						cb.like(cb.upper(root.get("cognome")), "%" + userExample.getCognome().toUpperCase() + "%"));
 
 			if (userExample.getDataCreazione() != null)
 				predicates
-						.add(cb.greaterThanOrEqualTo((root.get("DATACREAZIONE")),userExample.getDataCreazione()));
+						.add(cb.greaterThanOrEqualTo((root.get("datacreazione")),userExample.getDataCreazione()));
 
 			if (userExample.getStato() != null)
-				predicates.add(cb.like(cb.upper(root.get("STATO")), "%" + userExample.getStato() + "%"));
+				predicates.add(cb.like(cb.upper(root.get("stato")), "%" + userExample.getStato() + "%"));
 
 			return cb.and(predicates.toArray(new Predicate[predicates.size()]));
 		};
@@ -83,16 +83,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void changeUserAbilitation(Long userInstanceId) {
+	public void changeUserAbilitation(String userInstanceId) {
 		
-		User userInstance = caricaSingoloUtente(userInstanceId);
-		
-		if(userInstance.getStato().equals(Stato.ATTIVO)) {
-			userInstance.setStato(Stato.DISABILITATO);
-		}
-		if(userInstance.getStato().equals(Stato.CREATO)) {
-			userInstance.setStato(Stato.DISABILITATO);
-		}
+		User userInstance = findByUsername(userInstanceId);
+		userInstance.setStato(Stato.DISABILITATO);
+		userRepository.save(userInstance);
+	}
+
+	@Override
+	public User findByUsername(String username) {
+		return userRepository.findByUsername(username);
 	}
 
 }
