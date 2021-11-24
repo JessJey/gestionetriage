@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Dottore {
@@ -15,6 +16,7 @@ public class Dottore {
 	private String nome;
 	private String cognome;
 	private String codiceDipendente;
+	@OneToOne
 	private Paziente pazienteAttualmenteInVisita;
 	
 	public Dottore() {

@@ -8,6 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Paziente {
@@ -21,6 +22,7 @@ public class Paziente {
 	private Date datacreazione;
 	@Enumerated(EnumType.STRING)
 	private StatoPaziente statoPaziente;
+	@OneToOne
 	private Dottore dottore;
 	
 	public Paziente() {

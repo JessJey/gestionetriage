@@ -15,9 +15,9 @@ public interface UserService {
 	
 	Page<User> searchAndPaginate(User userExample, Integer pageNo, Integer pageSize, String sortBy);
 	
-	public void aggiorna(User userInstance);
+	public User aggiorna(User userInstance);
 
-	public void inserisciNuovo(User userInstance);
+	public User inserisciNuovo(User userInstance);
 	
 	public void changeUserAbilitation(Long userInstanceId);
 }

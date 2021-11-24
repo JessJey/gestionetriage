@@ -1,6 +1,7 @@
 package it.prova.gestionetriage.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.Predicate;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
 import it.prova.gestionetriage.exceptions.UserNotFoundException;
 import it.prova.gestionetriage.model.Stato;
 import it.prova.gestionetriage.model.User;
-import it.prova.gestionetriage.repository.UserRepository;
+import it.prova.gestionetriage.security.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -69,14 +70,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void aggiorna(User userInstance) {
-		userRepository.save(userInstance);
+	public User aggiorna(User userInstance) {
+		return userRepository.save(userInstance);
 
 	}
 
 	@Override
-	public void inserisciNuovo(User userInstance) {
-		userRepository.save(userInstance);
+	public User inserisciNuovo(User userInstance) {
+		userInstance.setDataCreazione(new Date());
+	return	userRepository.save(userInstance);
 
 	}
 

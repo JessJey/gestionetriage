@@ -40,7 +40,7 @@ public class User {
 	private String cognome;
 	
 	@Column(name = "DATACREAZIONE")
-	@NotNull
+	
 	private Date dataCreazione;
 
 	@Column(name = "ENABLED")
