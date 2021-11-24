@@ -2,15 +2,13 @@ package it.prova.gestionetriage.controller.api;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -40,9 +38,10 @@ public class AssegnaPazienteController {
 	private WebClient webClient;
 
 	@PostMapping
-	public void assegnaPaziente(@RequestParam String codiceFiscale, @RequestParam String codiceDipendente) {
+	@ResponseStatus(HttpStatus.OK)
+	public void assegnaPaziente(@RequestParam String codicefiscale, @RequestParam String codiceDipendente) {
 
-		Paziente paziente = pazienteService.findByCodiceFiscale(codiceFiscale);
+		Paziente paziente = pazienteService.findByCodicefiscale(codicefiscale);
 		Dottore dottore = dottoreService.findByCodice(codiceDipendente);
 
 		if (paziente == null)
@@ -55,6 +54,7 @@ public class AssegnaPazienteController {
 				.toEntity(DottoreResponseDTO.class).block();
 
 		DottoreResponseDTO dottoreRicevuto = response.getBody();
+		
 		if (!dottoreRicevuto.isInServizio() || dottoreRicevuto.isInVisita())
 			throw new DottoreNonDisponibileException("dottore non disponibile");
 

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import it.prova.gestionetriage.model.Paziente;
@@ -22,7 +23,7 @@ public class PazienteDTO {
 	private Date datacreazione;
 	
 	private StatoPaziente statoPaziente;
-	
+	@JsonIgnoreProperties(value = { "pazienteAttualmenteInVisita" })
 	private DottoreDTO dottore;
 
 	public PazienteDTO(Long id, String nome, String cognome,  String codicefiscale,
@@ -34,6 +35,7 @@ public class PazienteDTO {
 		this.codicefiscale = codicefiscale;
 		this.datacreazione = datacreazione;
 		this.statoPaziente = statoPaziente;
+		
 		this.dottore = dottore;
 	}
 

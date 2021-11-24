@@ -21,9 +21,10 @@ public class Dottore {
 	private String cognome;
 	private String codiceDipendente;
 
-	@JsonIgnoreProperties(value = { "dottore" })
+	
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "paziente_id", referencedColumnName = "id")
+	@JsonIgnoreProperties(value = { "dottore" })
 	private Paziente pazienteAttualmenteInVisita;
 	
 	public Dottore() {

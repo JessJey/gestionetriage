@@ -19,6 +19,6 @@ public interface PazienteService {
 	
 	public void delete(Paziente input);
 	
-	public Paziente findByCodiceFiscale(String codiceFiscale);
+	public Paziente findByCodicefiscale(String codicefiscale);
 
 }

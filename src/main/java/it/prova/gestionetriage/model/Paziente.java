@@ -26,9 +26,10 @@ public class Paziente {
 	private Date datacreazione;
 	@Enumerated(EnumType.STRING)
 	private StatoPaziente statoPaziente;
-	@JsonIgnoreProperties(value = { "pazienteAttualmenteInVisita" })
+	
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "dottore_id", referencedColumnName = "id")
+	@JsonIgnoreProperties(value = { "pazienteAttualmenteInVisita" })
 	private Dottore dottore;
 	
 	public Paziente() {

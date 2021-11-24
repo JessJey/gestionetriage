@@ -38,8 +38,8 @@ public class PazienteRestController {
 	
 	
 	@GetMapping
-	public List<PazienteDTO> getAll() {
-		return PazienteDTO.createPazienteDTOListFromModelList(pazienteService.listAll());
+	public List<Paziente> getAll() {
+		return pazienteService.listAll();
 	}
 	
 	@GetMapping("/{id}")
