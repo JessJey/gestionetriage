@@ -15,11 +15,8 @@ import it.prova.gestionetriage.model.StatoPaziente;
 public class PazienteDTO {
 
 	private Long id;
-	@NotBlank
 	private String nome;
-	@NotBlank
 	private String cognome;
-	@NotBlank
 	private String codicefiscale;
 
 	private Date datacreazione;
@@ -28,7 +25,7 @@ public class PazienteDTO {
 	
 	private DottoreDTO dottore;
 
-	public PazienteDTO(Long id, @NotBlank String nome, @NotBlank String cognome, @NotBlank String codicefiscale,
+	public PazienteDTO(Long id, String nome, String cognome,  String codicefiscale,
 			Date datacreazione,  StatoPaziente statoPaziente, DottoreDTO dottore) {
 		super();
 		this.id = id;
@@ -40,7 +37,7 @@ public class PazienteDTO {
 		this.dottore = dottore;
 	}
 
-	public PazienteDTO(@NotBlank String nome, @NotBlank String cognome, @NotBlank String codicefiscale,
+	public PazienteDTO( String nome,  String cognome,  String codicefiscale,
 			Date datacreazione,  StatoPaziente statoPaziente, DottoreDTO dottore) {
 		super();
 		this.nome = nome;
@@ -51,9 +48,21 @@ public class PazienteDTO {
 		this.dottore = dottore;
 	}
 
-	public PazienteDTO(@NotBlank String nome, @NotBlank String cognome, @NotBlank String codicefiscale,
+	public PazienteDTO( String nome,  String cognome,  String codicefiscale,
 			Date datacreazione,  StatoPaziente statoPaziente) {
 		super();
+		this.nome = nome;
+		this.cognome = cognome;
+		this.codicefiscale = codicefiscale;
+		this.datacreazione = datacreazione;
+		this.statoPaziente = statoPaziente;
+	}
+	
+
+	public PazienteDTO(Long id, String nome, String cognome, String codicefiscale, Date datacreazione,
+			StatoPaziente statoPaziente) {
+		super();
+		this.id = id;
 		this.nome = nome;
 		this.cognome = cognome;
 		this.codicefiscale = codicefiscale;
@@ -118,9 +127,14 @@ public class PazienteDTO {
 	}
 	
 	public static PazienteDTO buildPazienteDTOFromModel(Paziente pazienteModel) {
-		PazienteDTO result = new PazienteDTO(pazienteModel.getId(), pazienteModel.getNome(),
-				pazienteModel.getCognome(), pazienteModel.getCodicefiscale(),pazienteModel.getDatacreazione(),pazienteModel.getStatoPaziente(),DottoreDTO.buildDottoreDTOFromModel(pazienteModel.getDottore()));
-		return result;
+		if(pazienteModel.getDottore() == null)
+			return new PazienteDTO(pazienteModel.getId(), pazienteModel.getNome(),
+					pazienteModel.getCognome(), pazienteModel.getCodicefiscale(),pazienteModel.getDatacreazione(),
+					pazienteModel.getStatoPaziente());
+		
+		return new PazienteDTO(pazienteModel.getId(), pazienteModel.getNome(),
+				pazienteModel.getCognome(), pazienteModel.getCodicefiscale(),pazienteModel.getDatacreazione(),
+				pazienteModel.getStatoPaziente(),DottoreDTO.buildDottoreDTOFromModel(pazienteModel.getDottore()));
 	}
 
 	public static List<PazienteDTO> createPazienteDTOListFromModelList(List<Paziente> modelListInput) {
@@ -130,7 +144,11 @@ public class PazienteDTO {
 	}
 
 	public Paziente buildPazienteModel() {
-		return new Paziente(this.id, this.nome, this.cognome, this.codicefiscale, this.datacreazione,this.statoPaziente,
-				this.dottore.buildDottoreModel());
+		if (this.dottore == null)
+			return new Paziente(this.id, this.nome, this.cognome,this.codicefiscale, this.datacreazione, 
+					this.statoPaziente);
+
+		return new Paziente(this.id, this.nome, this.cognome, this.codicefiscale, this.datacreazione,
+				this.statoPaziente, this.dottore.buildDottoreModel());
 	}
 }

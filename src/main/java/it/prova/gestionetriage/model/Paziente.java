@@ -2,13 +2,17 @@ package it.prova.gestionetriage.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Paziente {
@@ -22,7 +26,9 @@ public class Paziente {
 	private Date datacreazione;
 	@Enumerated(EnumType.STRING)
 	private StatoPaziente statoPaziente;
-	@OneToOne
+	@JsonIgnoreProperties(value = { "pazienteAttualmenteInVisita" })
+	@OneToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "dottore_id", referencedColumnName = "id")
 	private Dottore dottore;
 	
 	public Paziente() {
@@ -55,6 +61,25 @@ public class Paziente {
 	public Paziente(String nome, String cognome, String codicefiscale, Date datacreazione,
 			StatoPaziente statoPaziente) {
 		super();
+		this.nome = nome;
+		this.cognome = cognome;
+		this.codicefiscale = codicefiscale;
+		this.datacreazione = datacreazione;
+		this.statoPaziente = statoPaziente;
+	}
+	
+
+	public Paziente(String nome, String cognome, String codicefiscale) {
+		super();
+		this.nome = nome;
+		this.cognome = cognome;
+		this.codicefiscale = codicefiscale;
+	}
+
+	public Paziente(Long id, String nome, String cognome, String codicefiscale, Date datacreazione,
+			StatoPaziente statoPaziente) {
+		super();
+		this.id = id;
 		this.nome = nome;
 		this.cognome = cognome;
 		this.codicefiscale = codicefiscale;

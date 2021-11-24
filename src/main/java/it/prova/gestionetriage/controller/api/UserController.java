@@ -56,10 +56,15 @@ public class UserController {
 	@PutMapping("/{id}")
 	public User updateUser(@RequestBody User userInput, @PathVariable String id) {
 		User userToUpdate = userService.findByUsername(id);
-		userToUpdate.setNome(userInput.getNome());
-		userToUpdate.setCognome(userInput.getCognome());
+		if(userInput.getNome() != null) {
+			userToUpdate.setNome(userInput.getNome());
+		}
+		if(userInput.getCognome() != null) {
+			userToUpdate.setCognome(userInput.getCognome());
+		}
+		if(userInput.getStato() != null) {
 		userToUpdate.setStato(userInput.getStato());
-		userToUpdate.setEnabled(userInput.getEnabled());
+		}
 		return userService.aggiorna(userToUpdate);
 	}
 
